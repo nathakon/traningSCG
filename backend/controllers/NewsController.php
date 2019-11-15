@@ -32,6 +32,9 @@ class NewsController extends Controller
      */
     public function actionIndex()
     {
+        if(!Yii::$app->user->can('news/index')){
+            return $this->redirect(['site/login']);
+        }
         $searchModel = new NewsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
@@ -58,6 +61,9 @@ class NewsController extends Controller
      */
     public function actionCreate()
     {
+        if(!Yii::$app->user->can('news/create')){
+            return $this->redirect(['site/login']);
+        }
         $model = new News();
         if (Yii::$app->request->post()) {
             $model->load(Yii::$app->request->post());
@@ -98,6 +104,9 @@ class NewsController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(!Yii::$app->user->can('news/update')){
+            return $this->redirect(['site/login']);
+        }
         $model = $this->findModel($id);
         
         
@@ -143,6 +152,9 @@ class NewsController extends Controller
      */
     public function actionDelete($id)
     {
+        if(!Yii::$app->user->can('news/delete')){
+            return $this->redirect(['site/login']);
+        }
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
